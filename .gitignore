@@ -1,0 +1,43 @@
+# ── Gradle / build output ──────────────────────────
+.gradle/
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+out/
+
+# ── Local machine config (SDK path, sometimes API keys) ──
+local.properties
+
+# ── Android Studio / IntelliJ ──────────────────────
+*.iml
+.idea/*
+!.idea/codeStyles/
+!.idea/runConfigurations/
+.navigation/
+*.hprof
+
+# ── Signing keys and secrets: NEVER commit ─────────
+*.jks
+*.keystore
+keystore.properties
+google-services.json
+*.pem
+.env
+
+# ── APKs and bundles ───────────────────────────────
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# ── Logs and temp files ────────────────────────────
+*.log
+*.tmp
+
+# ── OS junk ────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Projects that have their own repo ──────────────
+/imc_app/
