@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.learningnavigation.ui.theme.LearningnavigationTheme
 
@@ -59,7 +60,27 @@ fun SimpleNavigation( modifier: Modifier = Modifier) {
         navController = nav,
         startDestination = Screen.A.route
     ){
+        // Registrar pantallas
+        composable(Screen.A.route){
+            ScreenA(
+                goToB = { nav.navigate(Screen.B.route)},
+                goToC = { nav.navigate(Screen.C.route)}
+            )
 
+        }
+
+        composable(Screen.B.route){
+            ScreenB(
+                onBack = { nav.popBackStack()},
+                goToC = { nav.navigate(Screen.C.route)}
+            )
+        }
+
+        composable(Screen.C.route){
+            ScreenC(
+                onBack = { nav.popBackStack()}
+            )
+        }
     }
 
 }
@@ -104,7 +125,7 @@ fun ScreenA(goToB: (Int) -> Unit = {}, goToC: () -> Unit = {}) {
 @Preview(showBackground = true)
 // 4) B: muestra userId y opciones de back/clear
 @Composable
-fun ScreenB(userId: Int = 42, onBack: () -> Unit = {}, onGoHomeClearing: () -> Unit = {}) {
+fun ScreenB(userId: Int = 42, onBack: () -> Unit = {}, goToC: () -> Unit = {}) {
     Column(
         Modifier
             .fillMaxSize()
@@ -120,8 +141,8 @@ fun ScreenB(userId: Int = 42, onBack: () -> Unit = {}, onGoHomeClearing: () -> U
         Button(onClick = onBack) { Text("Atrás") }
 
         Spacer(Modifier.height(8.dp))
-        OutlinedButton(onClick = onGoHomeClearing) {
-            Text("Ir a A (limpiando stack)")
+        OutlinedButton(onClick = goToC) {
+            Text("Ir a C")
         }
     }
 }
