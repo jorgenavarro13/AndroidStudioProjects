@@ -24,22 +24,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.vmdemo.sesion.SessionViewModel
 
 @Preview(showBackground = true)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun InicioScreen(
+    sessionVm: SessionViewModel,
     onIrAPerfil: () -> Unit = {},
     onRegresar: () -> Unit = {}
 ) {
-    // PASO 2 (el problema): Inicio tiene SU PROPIO estado.
-    // No sabe qué se capturó en Login, así que todo empieza vacío.
-    val nombre by remember { mutableStateOf("") }
-    val rol by remember { mutableStateOf("") }
-    val estancia by remember { mutableStateOf("") }
-
-    // La regla del rol escrita aquí... y otra vez en cada pantalla que la necesite.
-    val esDireccion = rol == "Dirección"
+    val session by sessionVm.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
         topBar = {
@@ -65,11 +61,11 @@ fun InicioScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             Text(
-                text = "Hola, ${nombre.ifBlank { "(sin nombre)" }}",
+                text = "Hola, ${session.nombre.ifBlank { "(sin nombre)" }}",
                 style = MaterialTheme.typography.headlineMedium
             )
             Text(
-                text = estancia.ifBlank { "(sin estancia)" },
+                text = session.estancia.ifBlank { "(sin estancia)" },
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -82,7 +78,7 @@ fun InicioScreen(
                     Text("Faltas: 1")
                 }
             }
-            if (esDireccion) {
+            if (session.esDireccion) {
                 Button(onClick = { /* ver reportes */ }) {
                     Text("Reportes de todas las estancias")
                 }
