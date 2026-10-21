@@ -23,13 +23,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
-import com.example.rickandmorty.model.getPersonajes
 import com.example.rickandmorty.model.Personaje
 
 @Preview(showBackground = true)
 @Composable
 fun PersonajeCard(
-    personaje: Personaje = getPersonajes().first(),
+    personaje: Personaje,
     onClick: (Personaje) -> Unit = {}
 ) {
     Card(
